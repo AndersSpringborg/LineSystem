@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,8 +16,8 @@ namespace Core
 
         // Properties
         public uint ID { get; set; }
-        public string FirstName { get => _firstName; set { CheckSetter(value, v => v.All(Char.IsLetter), ref _firstName); } }
-        public string LastName { get => _lastName; set { CheckSetter(value, v => v.All(Char.IsLetter), ref _lastName); } }
+        public string FirstName { get => _firstName; set => StringCheckSetter(value, @"[A-z]"); }
+        public string LastName { get => _lastName; set => StringCheckSetter(value, @"[A-z]"); }
         public string UserName
         {
             get
@@ -25,19 +26,10 @@ namespace Core
             }
             set
             {
-                CheckSetter(value, v => v.All(Char.IsLetterOrDigit), ref _userName);
-
-                //if (value.All(Char.IsLetterOrDigit))
-                //    _userName = value;
-                //else
-                //{
-                //    _userName = "Forkert navn";
-                //    throw new Exception();
-                //}
+                _userName = StringCheckSetter(value, @"[A-z]");
             }
         }
 
-        // Methods
         public User(uint iD, string firstName, string lastName, string userName)
         {
             ID = iD;
@@ -48,18 +40,9 @@ namespace Core
 
         public override string ToString() => $"{FirstName} {LastName} \n\tID: {ID.ToString().PadLeft(10)} Username: {UserName}";
 
-        // Genereic function, that valides an input. Validates in line with the methods parameter
-        private void CheckSetter<T>(T value, Predicate<T> checkFunction, ref T field)
+        private string StringCheckSetter (string value, string restriction)
         {
-            field = checkFunction(value) ? value : throw new ArgumentException("value stemmer ikke overens med krav (checkfunction)");
-            //if (checkFunction(value))
-            //{
-            //    field = value;
-            //}
-            //else
-            //{
-            //    throw new ArgumentException("value stemmer ikke overens med krav (checkfunction)");
-            //}
+            return Regex.IsMatch(value, restriction) ? value : throw new ArgumentException("value stemmer ikke overens med krav (checkfunction)");
         }
     }
 }
