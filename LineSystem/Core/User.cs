@@ -16,8 +16,8 @@ namespace Core
 
         // Properties
         public uint ID { get; set; }
-        public string FirstName { get => _firstName; set => StringCheckSetter(value, @"[A-z]"); }
-        public string LastName { get => _lastName; set => StringCheckSetter(value, @"[A-z]"); }
+        public string FirstName { get => _firstName; set { _firstName = StringCheckSetter(value, @"[A-z]"); } }
+        public string LastName { get => _lastName; set { _lastName = StringCheckSetter(value, @"[A-z]"); } }
         public string UserName
         {
             get
@@ -26,7 +26,7 @@ namespace Core
             }
             set
             {
-                _userName = StringCheckSetter(value, @"[A-z]");
+                _userName = StringCheckSetter(value, @"[A-z0-9-]");
             }
         }
 
@@ -38,7 +38,7 @@ namespace Core
             UserName = userName;
         }
 
-        public override string ToString() => $"{FirstName} {LastName} \n\tID: {ID.ToString().PadLeft(10)} Username: {UserName}";
+        public override string ToString() => $"{FirstName} {LastName} \n -----> ID: {ID.ToString().PadLeft(6, '0')} Username: {UserName}";
 
         private string StringCheckSetter (string value, string restriction)
         {
