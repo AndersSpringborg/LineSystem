@@ -26,7 +26,7 @@ namespace Core
             }
             set
             {
-                _userName = StringCheckSetter(value, @"[A-z0-9-]");
+                _userName = StringCheckSetter(value, @"[a-zA-Z0-9]");
             }
         }
 

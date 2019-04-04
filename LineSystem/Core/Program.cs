@@ -21,7 +21,7 @@ namespace Core
                 Console.WriteLine("En værdi må ikke være ingenting");
                 Console.WriteLine(e.Message);
             }
-            Console.ReadLine();
+            Console.ReadKey();
         }
     }
 }
