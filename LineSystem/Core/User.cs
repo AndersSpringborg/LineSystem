@@ -47,8 +47,8 @@ namespace Core
             {
                 return Regex.IsMatch(value, @"^[" + restriction + "]+$") ? value : throw new ArgumentException("value stemmer ikke overens med krav (checkfunction)");
             }
-            throw new Exception();
             //throw new input exceptiop??
+                
         }
     }
 }
