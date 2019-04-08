@@ -10,29 +10,31 @@ namespace Core
     class User
     {
         // Backing Fields
+        private static uint ID = 100;
+        private uint _myId;
         private string _firstName;
         private string _lastName;
         private string _userName;
 
         // Properties
-        public uint ID { get; set; }
-        public string FirstName { get => _firstName; set { _firstName = StringCheckSetter(value, @"[A-z]"); } }
-        public string LastName { get => _lastName; set { _lastName = StringCheckSetter(value, @"[A-z]"); } }
+        public uint MyId { get { return _myId; } }
+        public string FirstName
+        {
+            get => _firstName; set { _firstName = StringCheckSetter(value, @"[A-z]"); }
+        }
+        public string LastName
+        {
+            get => _lastName; set { _lastName = StringCheckSetter(value, @"[A-z]"); }
+        }
         public string UserName
         {
-            get
-            {
-                return _userName;
-            }
-            set
-            {
-                _userName = StringCheckSetter(value, @"[A-z0-9-]");
-            }
+            get => _userName; set{ _userName = StringCheckSetter(value, @"[A-z0-9-]");}
         }
 
-        public User(uint iD, string firstName, string lastName, string userName)
+        public User(string firstName, string lastName, string userName)
         {
-            ID = iD;
+            ID++;
+            _myId = ID;
             FirstName = firstName;
             LastName = lastName;
             UserName = userName;

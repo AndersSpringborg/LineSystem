@@ -13,8 +13,11 @@ namespace Core
             
             try
             {
-                User kurt = new User(1, "Anders", "Springborg", Console.ReadLine());
+                User kurt = new User("Anders", "Springborg", "hej1");
                 Console.WriteLine(kurt);
+                User kurt2 = new User("Anders", "Springborg", "hej2");
+                Console.WriteLine(kurt);
+                Console.WriteLine(kurt2);
             }
             catch (Exception e)
             {
