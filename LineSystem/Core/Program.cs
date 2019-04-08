@@ -15,7 +15,7 @@ namespace Core
             {
                 User kurt = new User("Anders", "Springborg", "888_aaen");
                 Console.WriteLine(kurt);
-                User kurt2 = new User("anders", "Springborg", "aaen");
+                User kurt2 = new User("Ugler", "Mosen", "skkrrrt69_");
                 Console.WriteLine(kurt);
                 Console.WriteLine(kurt2);
             }
