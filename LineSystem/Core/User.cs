@@ -43,12 +43,7 @@ namespace Core
 
         private string StringCheckSetter (string value, string restriction)
         {
-            if (!String.IsNullOrEmpty(value))
-            {
-                return Regex.IsMatch(value, @"^[" + restriction + "]+$") ? value : throw new ArgumentException("value stemmer ikke overens med krav (checkfunction)");
-            }
-            //throw new input exceptiop??
-                
+            return Regex.IsMatch(value, @"^[" + restriction + "]+$") ? value : throw new ArgumentException("value stemmer ikke overens med krav (checkfunction)");
         }
     }
 }
