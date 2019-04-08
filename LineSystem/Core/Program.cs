@@ -13,21 +13,18 @@ namespace Core
             
             try
             {
-                User kurt = new User("Anders", "Springborg", "888_aaen");
+                User kurt = new User("Anders", "Springborg", "hej1");
                 Console.WriteLine(kurt);
-                User kurt2 = new User("anders", "Springborg", "aaen");
+                User kurt2 = new User("Anders", "Springborg", "hej2");
                 Console.WriteLine(kurt);
                 Console.WriteLine(kurt2);
             }
-            catch (ArgumentNullException e)
-            {
-                Console.WriteLine("En værdi må ikke være ingenting");
-            }
             catch (Exception e)
             {
+                Console.WriteLine("En værdi må ikke være ingenting");
                 Console.WriteLine(e.Message);
             }
-            Console.ReadKey();
+            Console.ReadLine();
         }
     }
 }

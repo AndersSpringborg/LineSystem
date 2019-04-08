@@ -20,14 +20,15 @@ namespace Core
         public uint MyId { get { return _myId; } }
         public string FirstName
         {
-            get
-            {
-                return _userName;
-            }
-            set
-            {
-                _userName = StringCheckSetter(value, @"[A-z0-9-]");
-            }
+            get => _firstName; set { _firstName = StringCheckSetter(value, @"[A-z]"); }
+        }
+        public string LastName
+        {
+            get => _lastName; set { _lastName = StringCheckSetter(value, @"[A-z]"); }
+        }
+        public string UserName
+        {
+            get => _userName; set{ _userName = StringCheckSetter(value, @"[A-z0-9-]");}
         }
 
         public User(string firstName, string lastName, string userName)
@@ -43,7 +44,7 @@ namespace Core
 
         private string StringCheckSetter (string value, string restriction)
         {
-            return Regex.IsMatch(value, @"^[" + restriction + "]+$") ? value : throw new ArgumentException("value stemmer ikke overens med krav (checkfunction)");
+            return Regex.IsMatch(value, restriction) ? value : throw new ArgumentException("value stemmer ikke overens med krav (checkfunction)");
         }
     }
 }
