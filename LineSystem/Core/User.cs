@@ -20,15 +20,14 @@ namespace Core
         public uint MyId { get { return _myId; } }
         public string FirstName
         {
-            get => _firstName; set { _firstName = StringCheckSetter(value, "a-zA-Z0-9"); }
-        }
-        public string LastName
-        {
-            get => _lastName; set { _lastName = StringCheckSetter(value, "a-zA-Z0-9"); }
-        }
-        public string UserName
-        {
-            get => _userName; set{ _userName = StringCheckSetter(value, "a-zA-Z0-9_");}
+            get
+            {
+                return _userName;
+            }
+            set
+            {
+                _userName = StringCheckSetter(value, @"[A-z0-9-]");
+            }
         }
 
         public User(string firstName, string lastName, string userName)
