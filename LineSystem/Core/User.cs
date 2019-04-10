@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,13 +12,13 @@ namespace Core
     {
         // Backing Fields
         private static uint ID = 100;
-        private uint _myId;
         private string _firstName;
         private string _lastName;
         private string _userName;
+        private string _email;
 
         // Properties
-        public uint MyId { get { return _myId; } }
+        public uint MyId { get; private set; }
         public string FirstName
         {
             get => _firstName; set { _firstName = StringCheckSetter(value, "A-z"); }
@@ -30,26 +31,39 @@ namespace Core
         {
             get => _userName; set{ _userName = StringCheckSetter(value, "A-z0-9_");}
         }
+        public string Email
+        {
+            get => _email;
+            set => _email = new EmailAddressAttribute().IsValid(value) ? value : throw new ArgumentException();
+        }
 
-        public User(string firstName, string lastName, string userName)
+        public User(string firstName, string lastName, string userName, string email)
         {
             ID++;
-            _myId = ID;
+            MyId = ID;
             FirstName = firstName;
             LastName = lastName;
             UserName = userName;
+            Email = email;
         }
 
-        public override string ToString() => $"{FirstName} {LastName} \n -----> ID: {ID.ToString().PadLeft(6, '0')} Username: {UserName}";
+        public override string ToString()
+        {
+            return $"{FirstName} " +
+                $"{LastName} " +
+                $"\n -----> ID:{MyId.ToString().PadLeft(6, '0')} " +
+                $"Username: {UserName}" +
+                $"\n        Email: {Email}";
+        }
 
         private string StringCheckSetter (string value, string restriction)
         {
             if (!String.IsNullOrEmpty(value))
             {
                 // Argument exception?
-                return Regex.IsMatch(value, @"^[" + restriction + "]+$") ? value : throw new ArgumentException(restriction);
+                return Regex.IsMatch(value, @"^[" + restriction + "]+$") ? value : throw new ArgumentException();
             }
-            throw new Exception();
+            throw new ArgumentException();
             //throw new input exceptiop??
 
 
