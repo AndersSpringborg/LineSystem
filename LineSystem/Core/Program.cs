@@ -20,11 +20,12 @@ namespace Core
                 Console.WriteLine(kurt2);
                 Console.WriteLine();
 
-                kurt.Withdraw(100);
+                kurt.Deposit(100);
+                kurt.Withdraw(55);
             }
-            catch (ArgumentException)
+            catch (ArgumentException e)
             {
-                Console.WriteLine("Keep within input guidelines");
+                Console.WriteLine(e.Message);
                 
             }
             catch (Exception e)

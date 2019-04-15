@@ -8,21 +8,22 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    public class User : IEquatable<User>
+    public class User : IEquatable<User>, IComparable
     {
-        // delegates
-        #region
-        private delegate void UserBalanceNotification(User user, decimal balance);
+
+        #region delegates
+        public delegate void UserBalanceNotification(User user, decimal balance);
+        public UserBalanceNotification BalanceHandler = (u, b) => Console.WriteLine($"{u.ToString()} Balance: {b}");
         #endregion
-        // Backing Fields
+        #region backing fields
         private static uint ID = 100;
         private string _firstName;
         private string _lastName;
         private string _userName;
         private string _email;
-        private decimal _balance;
+        #endregion
 
-        // Properties
+        #region Properties
         public uint MyId { get; private set; }
         public string FirstName
         {
@@ -41,11 +42,8 @@ namespace Core
             get => _email;
             set => _email = new EmailAddressAttribute().IsValid(value) ? value : throw new ArgumentException();
         }
-        public decimal Balance
-        {
-            get => _balance;
-        }
-
+        public decimal Balance { get; private set;}
+        #endregion
         public User(string firstName, string lastName, string userName, string email)
         {
             ID++;
@@ -54,9 +52,8 @@ namespace Core
             LastName = lastName;
             UserName = userName;
             Email = email;
-            _balance = 0;
+            Balance = 0;
         }
-
         public override string ToString()
         {
             return $"{FirstName} {LastName} Email: {Email}";
@@ -68,12 +65,11 @@ namespace Core
             {
                 // Argument exception?
                 return Regex.IsMatch(value, @"^[" + restriction + "]+$") 
-                    ? value : throw new ArgumentException();
+                    ? value : throw new ArgumentException("Sting dosen't fit input guidelines");
             }
-            throw new ArgumentException();
-            //throw new input exceptiop?
+            throw new ArgumentException("String is null or empty");
         }
-        #region Equals and GetHAshCode
+        #region Equals, GetHashCode CompareTo
         public override bool Equals(object obj)
         {
             if (obj == null)
@@ -99,10 +95,21 @@ namespace Core
             return
                 MyId.GetHashCode() ^
                 Email.GetHashCode() ^
-                UserName.GetHashCode();
-                    
+                UserName.GetHashCode();           
         }
-       
+
+        public int CompareTo (object obj)
+        {
+            if (obj == null)
+            {
+                return 1;
+            }
+            if (GetType() == obj.GetType())
+            {
+                return MyId.CompareTo(((User)obj).MyId);
+            }
+            throw new ArgumentException("Object is not a User");
+        }
         #endregion
 
         #region Balance Methods
@@ -114,16 +121,19 @@ namespace Core
 
         public decimal Withdraw(decimal amount)
         {
-            UserBalanceNotification Handler = BalanceNotificationToUser;
-            Handler += BalanceNotificationToBank;
-            _balance -= amount;
-            if (_balance <= 50)
+            Balance -= amount;
+            if (Balance <= 50)
             {
-                Handler(this, _balance);
+                Console.WriteLine("low balance");
+                BalanceHandler(this, Balance);
             }
             return amount;
         }
-        public void Deposit(decimal amount) => _balance += amount;
+        public void Deposit(decimal amount)
+        {
+            BalanceHandler(this, Balance += amount);
+        }
         #endregion
+
     }
 }
