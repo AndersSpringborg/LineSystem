@@ -6,7 +6,21 @@
         xmlns:local="clr-namespace:UserInterface"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
     <Grid>
-        
+        <Border BorderThickness="3" BorderBrush="Black" Margin="225,120,207,258">
+            <TextBox HorizontalAlignment="Left" Height="21" Margin="7,7,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="340"/>
+        </Border>
+        <Button Content="Køb!" HorizontalAlignment="Left" Margin="598,128,0,0" VerticalAlignment="Top" Width="83" Height="22"/>
+        <TextBlock HorizontalAlignment="Left" Margin="153,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="21" Width="67" Text="Quickbuy" TextAlignment="Center"/>
+
+        <DataGrid x:Name="pricesDataGrid" AutoGenerateColumns="False" ItemsSource="{Binding Path=Products}" Margin="133,180,469,17" SelectionChanged="PricesDataGrid_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Mode=OneWay, Path=Name}" Header="ID" IsReadOnly="True" />
+                <DataGridTextColumn Binding="{Binding Mode=OneWay, Path=Name}" Header="Produkt" IsReadOnly="True" />
+                <DataGridTextColumn Binding="{Binding Mode=OneWay, Path=Name}" Header="Pris" IsReadOnly="True" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>
+  

@@ -1,8 +1,10 @@
 ﻿using System;
+using Core;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace UserInterface
 {
@@ -10,34 +12,33 @@ namespace UserInterface
     public class LineSystemUI : ILineSystemUI
     {
         // backing fields
+
         private MainWindow Application = new MainWindow();
+        public event StregsystemEvent CommandEntered;
 
         public LineSystemUI(MainWindow application)
         {
             Application = application;
         }
 
-
-        public event StregsystemEvent CommandEntered;
-
         public void Close()
-        {
+        {   
             Application.Close();
         }
 
         public void DisplayAdminCommandNotFoundMessage(string adminCommand)
         {
-            throw new NotImplementedException();
+            MessageBox.Show("The admin input " + adminCommand + " is not a valid command.", "Input invalid", MessageBoxButton.OK);
         }
 
         public void DisplayGeneralError(string errorString)
         {
-            throw new NotImplementedException();
+            MessageBox.Show($"There was a general error: {errorString}", "General error", MessageBoxButton.OK);
         }
 
         public void DisplayInsufficientCash(User user, Product product)
         {
-            throw new NotImplementedException();
+            MessageBox.Show($"{user.UserName} you don't have sufficient cash to purchase {product.ToString()}" , "Black hole discovered", MessageBoxButton.OK);
         }
 
         public void DisplayProductNotFound(string product)
@@ -75,6 +76,5 @@ namespace UserInterface
             throw new NotImplementedException();
         }
 
-        public delegate void StregsystemEvent(string command);
     }
 }
