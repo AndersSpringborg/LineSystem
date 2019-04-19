@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{DFF51C54-8536-45F4-8413-B6212B2C3634}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LineSystem_cSharp1", "Core\LineSystem_cSharp1.csproj", "{DFF51C54-8536-45F4-8413-B6212B2C3634}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestLineSystem", "TestLineSystem\TestLineSystem.csproj", "{3CE92486-0DA5-4191-8253-6D29549A4765}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserInterface", "UserInterface\UserInterface.csproj", "{CE679FA4-2466-4885-B335-B41216BAEE77}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LineSystem_cSharp", "UserInterface\LineSystem_cSharp.csproj", "{CE679FA4-2466-4885-B335-B41216BAEE77}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

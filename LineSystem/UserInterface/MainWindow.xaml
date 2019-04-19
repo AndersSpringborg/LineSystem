@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UserInterface"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="LineSystem" Height="450" Width="800">
 
     <Grid>
         <Border BorderThickness="3" BorderBrush="Black" Margin="225,120,207,258">
-            <TextBox HorizontalAlignment="Left" Height="21" Margin="7,7,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="340"/>
+            <TextBox Name="CommandInput"  HorizontalAlignment="Left" Height="21" Margin="7,7,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="340"/>
         </Border>
         <Button Content="Køb!" HorizontalAlignment="Left" Margin="598,128,0,0" VerticalAlignment="Top" Width="83" Height="22"/>
         <TextBlock HorizontalAlignment="Left" Margin="153,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="21" Width="67" Text="Quickbuy" TextAlignment="Center"/>
@@ -21,6 +21,7 @@
                 <DataGridTextColumn Binding="{Binding Mode=OneWay, Path=Name}" Header="Pris" IsReadOnly="True" />
             </DataGrid.Columns>
         </DataGrid>
+        <TextBlock x:Name="CommandOutput" HorizontalAlignment="Left" Margin="445,180,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="18" Width="323"><Run/><LineBreak/><Run/></TextBlock>
     </Grid>
 </Window>
   

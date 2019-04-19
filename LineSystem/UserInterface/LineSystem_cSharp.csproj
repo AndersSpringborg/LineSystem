@@ -63,6 +63,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Core\BuyTransaction.cs" />
+    <Compile Include="Core\IStregsystem.cs" />
+    <Compile Include="Core\Product.cs" />
+    <Compile Include="Core\Stregsystem.cs" />
+    <Compile Include="Core\User.cs" />
     <Compile Include="ILineSystemUI.cs" />
     <Compile Include="LineSystemUI.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -97,10 +102,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\Core.csproj">
+    <ProjectReference Include="..\Core\LineSystem_cSharp1.csproj">
       <Project>{dff51c54-8536-45f4-8413-b6212b2c3634}</Project>
-      <Name>Core</Name>
+      <Name>LineSystem_cSharp1</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controller\" />
+    <Folder Include="GUI\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
