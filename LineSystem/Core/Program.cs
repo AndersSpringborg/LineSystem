@@ -18,9 +18,6 @@ namespace Core
                 User kurt2 = new User("Ugler", "Mosen", "skrrt69_", "lil@spurt.onTheBeat");
                 Console.WriteLine(kurt);
                 Console.WriteLine(kurt2);
-                Console.WriteLine();
-
-                kurt.Withdraw(100);
             }
             catch (ArgumentException)
             {
