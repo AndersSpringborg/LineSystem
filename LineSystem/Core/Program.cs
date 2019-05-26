@@ -10,25 +10,11 @@ namespace Core
     {
         static void Main(string[] args)
         {
-            
-            try
-            {
-                User kurt = new User("Anders", "Springborg", "888_aaen", "aaspringborg@gmail.com");
-                Console.WriteLine(kurt);
-                User kurt2 = new User("Ugler", "Mosen", "skrrt69_", "lil@spurt.onTheBeat");
-                Console.WriteLine(kurt);
-                Console.WriteLine(kurt2);
-            }
-            catch (ArgumentException)
-            {
-                Console.WriteLine("Keep within input guidelines");
-                
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            Console.ReadKey();
+            IStregsystem stregsystem = new Stregsystem();
+            IStregsystemUI ui = new StregsystemCLI(stregsystem);
+            StregsystemController sc = new StregsystemController(ui, stregsystem);
+            ui.Start();
         }
+
     }
 }

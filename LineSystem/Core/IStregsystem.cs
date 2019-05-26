@@ -16,6 +16,5 @@ namespace Core
         User GetUsers(Func<User, bool> predicate);
         User GetUserByUsername(string username);
         event UserBalanceNotification UserBalanceWarning;
-
     }
 }

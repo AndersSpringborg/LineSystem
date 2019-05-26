@@ -8,14 +8,16 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    class User
+    public class User
     {
+        public UserBalanceNotification UserBalanceNotification;
         // Backing Fields
         private static uint ID = 100;
         private string _firstName;
         private string _lastName;
         private string _userName;
         private string _email;
+        private decimal _balance;
 
         // Properties
         public uint MyId { get; private set; }
@@ -35,6 +37,19 @@ namespace Core
         {
             get => _email;
             set => _email = new EmailAddressAttribute().IsValid(value) ? value : throw new ArgumentException();
+        }
+
+        public decimal Balance
+        {
+            get => _balance;
+            set
+            {
+                _balance = value;
+                if (Balance <= 50)
+                {
+                    UserBalanceNotification(this, Balance);
+                }
+            }
         }
 
         public User(string firstName, string lastName, string userName, string email)

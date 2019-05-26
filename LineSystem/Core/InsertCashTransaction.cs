@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    public class Product
+    public class InsertCashTransaction
     {
-        public decimal Price { get; set; }
     }
 }
