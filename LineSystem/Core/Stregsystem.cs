@@ -3,12 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Core
 {
     public delegate void UserBalanceNotification(User user, decimal balance);
     class Stregsystem : IStregsystem
     {
+        public Stregsystem()
+        {
+            productLoading();
+        }
+
+        private void productLoading()
+        {
+            var products = File.ReadAllLines();
+        }
         public IEnumerable<Product> ActiveProducts { get; }
         public InsertCashTransaction AddCreditsToAccount(User user, int amount)
         {
