@@ -17,7 +17,13 @@ namespace Core
 
         private void productLoading()
         {
-            var products = File.ReadAllLines();
+            
+            var reader = new StreamReader(@"..\..\..\InputFiles\products.csv");
+            
+            while (!reader.EndOfStream)
+            {
+                var hej = reader.ReadLine();
+            }
         }
         public IEnumerable<Product> ActiveProducts { get; }
         public InsertCashTransaction AddCreditsToAccount(User user, int amount)
