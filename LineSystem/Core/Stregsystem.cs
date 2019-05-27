@@ -4,28 +4,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Core
 {
     public delegate void UserBalanceNotification(User user, decimal balance);
     class Stregsystem : IStregsystem
     {
+        private readonly List<Product> _products = new List<Product>();
         public Stregsystem()
         {
-            productLoading();
+            ProductLoading();
         }
 
-        private void productLoading()
+        private void ProductLoading()
         {
             
             var reader = new StreamReader(@"..\..\..\InputFiles\products.csv");
-            
+            reader.ReadLine();
             while (!reader.EndOfStream)
             {
-                var hej = reader.ReadLine();
+                var lineRead = reader.ReadLine()?.Split(';');
+                if (lineRead != null)
+                {
+                    var id = Int32.Parse(lineRead[0]);
+                    var name = Regex.Replace(lineRead[1], "\"", "");
+                    var price = Decimal.Parse(lineRead[2]);
+                    var active = lineRead[3] == "1"; 
+                    _products.Add(new Product(id, name, price, active));
+                }
             }
         }
-        public IEnumerable<Product> ActiveProducts { get; }
+        public IEnumerable<Product> ActiveProducts => _products;
+
         public InsertCashTransaction AddCreditsToAccount(User user, int amount)
         {
             throw new NotImplementedException();

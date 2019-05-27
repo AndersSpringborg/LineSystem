@@ -81,6 +81,8 @@ namespace Core
 
         private void Draw()
         {
+            // del produkter op i to
+
             Console.WriteLine("Write your username and the product you want to buy, separated with a space");
             Console.WriteLine("----------------------------------------------------------");
             foreach (var product in _stregsystem.ActiveProducts)
@@ -92,6 +94,7 @@ namespace Core
 
         private void Prompt()
         {
+            Console.Write(": ");
             CommandEntered(Console.ReadLine()?.Split(' '));
         }
     }
