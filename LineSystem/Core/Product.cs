@@ -1,23 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Core
 {
     public class Product
     {
+        private int _id;
+        private string _name;
         public Product(int id, string name, decimal price, bool active)
         {
             Id = id;
-            Name = name ?? throw new ArgumentNullException(nameof(name));
+            Name = name;
             Price = price;
             Active = active;
         }
 
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int Id
+        {
+            get => _id;
+            set
+            {
+                if (value > 0)
+                {
+                    _id = value;
+                }
+            }
+        }
+
+        public string Name
+        {
+            get => _name;
+            set => _name = Regex.Replace(value, "<.*?>", String.Empty);
+        }
         public decimal Price { get; set; }
         public bool Active { get; set; }
         public bool CanBeBoughtOnCredit { get; set; }
@@ -38,5 +57,6 @@ namespace Core
         public TimeSpan SeasonStartDate { get; set; }
         public TimeSpan SeasonEndDate { get; set; }
 
+      
     }
 }

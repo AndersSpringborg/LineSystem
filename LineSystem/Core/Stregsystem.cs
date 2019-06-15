@@ -11,10 +11,16 @@ namespace Core
     public delegate void UserBalanceNotification(User user, decimal balance);
     class Stregsystem : IStregsystem
     {
+        private List<Transaction> _transactions = new List<Transaction>();
         private readonly List<Product> _products = new List<Product>();
+        private readonly List<User> _users = new List<User>();
+        public event UserBalanceNotification UserBalanceWarning;
+        public IEnumerable<Product> ActiveProducts => _products.Where(x => x.Active);
+
         public Stregsystem()
         {
             ProductLoading();
+            UserLoading();
         }
 
         private void ProductLoading()
@@ -35,39 +41,81 @@ namespace Core
                 }
             }
         }
-        public IEnumerable<Product> ActiveProducts => _products;
 
-        public InsertCashTransaction AddCreditsToAccount(User user, int amount)
+        private void UserLoading()
+        { 
+
+        }
+
+        private void UserBalanceNotification(User user, decimal balance)
         {
-            throw new NotImplementedException();
+
+        }
+
+        public InsertCashTransaction AddCreditsToAccount(User user, decimal amount)
+        {
+            var newTransaction = new InsertCashTransaction(user, amount);
+            return newTransaction;
+        }
+
+        private void ExecuteTransaction(Transaction transaction)
+        {
+            _transactions.Add(transaction);
         }
 
         public BuyTransaction BuyProduct(User user, Product product)
         {
-            throw new NotImplementedException();
+            BuyTransaction newTransaction;
+            try
+            {
+                newTransaction = new BuyTransaction(user, product);
+            }
+            catch (InsufficientCreditsException e)
+            {
+                throw;
+            }
+            _transactions.Add(newTransaction);
+            return newTransaction;
+
         }
 
         public Product GetProductByID(int id)
         {
-            throw new NotImplementedException();
+            return _products.Find(x => x.Id == id);
         }
 
         public IEnumerable<Transaction> GetTransactions(User user, int count)
         {
-            throw new NotImplementedException();
+            return _transactions
+                .Where(x => x.User.Equals(user))
+                .Reverse()
+                .Take(count);
         }
 
         public User GetUsers(Func<User, bool> predicate)
         {
-            throw new NotImplementedException();
+            return _users.Where(predicate).First();
         }
 
         public User GetUserByUsername(string username)
         {
-            throw new NotImplementedException();
+            var User = _users.Find(x => x.UserName.Equals(username));
+            if (User != null)
+            {
+                return User;
+            }
+            throw new UserNotFoundException(username, "User not found");
         }
 
-        public event UserBalanceNotification UserBalanceWarning;
+        
     }
 
+    internal class UserNotFoundException : Exception
+    {
+        public string UserName;
+        public UserNotFoundException(string userName, string s) : base(s)
+        {
+            UserName = userName;
+        }
+    }
 }

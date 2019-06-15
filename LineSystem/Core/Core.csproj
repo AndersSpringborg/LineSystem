@@ -45,8 +45,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuyTransaction.cs" />
-    <Compile Include="InsertCashTransaction.cs" />
     <Compile Include="IStregsystem.cs" />
     <Compile Include="IStregsystemUI.cs" />
     <Compile Include="Product.cs" />

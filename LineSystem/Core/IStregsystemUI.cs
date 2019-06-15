@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Core
 {
-    public delegate void StregsystemEvent(string[] commandStrings);
+    public delegate void StregsystemEvent(string commandStrings);
     public interface IStregsystemUI
     {
         void DisplayUserNotFound(string username);

@@ -12,7 +12,7 @@ namespace Core
         public event StregsystemEvent CommandEntered;
         private bool _running = true;
         private IStregsystem _stregsystem;
-        public string[] Commands;
+        public string Command;
         public StregsystemCLI(IStregsystem stregsystem)
         {
             _stregsystem = stregsystem;
@@ -66,7 +66,7 @@ namespace Core
 
         public void DisplayGeneralError(string errorString)
         {
-            Console.WriteLine($"sry man, i relly don't get this \"{errorString}\"");
+            Console.WriteLine($"sry man, i relly don't get this: \"{errorString}\"");
         }
 
         public void Start()
@@ -75,15 +75,14 @@ namespace Core
             {
                 Draw();
                 Prompt();
-                if (CommandEntered != null) CommandEntered(Commands);
+                if (CommandEntered != null) CommandEntered(Command);
             } while (_running);
         }
 
         private void Draw()
         {
-            // del produkter op i to
-
             Console.WriteLine("Write your username and the product you want to buy, separated with a space");
+            Console.WriteLine(String.Format("{0, 4} | {1, -40} | {2}", "ID", "Product", "Price"));
             Console.WriteLine("----------------------------------------------------------");
             foreach (var product in _stregsystem.ActiveProducts)
             {
@@ -95,7 +94,7 @@ namespace Core
         private void Prompt()
         {
             Console.Write(": ");
-            CommandEntered(Console.ReadLine()?.Split(' '));
+            Command = Console.ReadLine();
         }
     }
 }
