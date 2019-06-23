@@ -23,11 +23,12 @@ namespace Core
         public uint MyId { get; }
         public string FirstName
         {
-            get => _firstName; set => _firstName = StringCheckSetter(value, "A-z");
+            get => _firstName; set => _firstName = StringCheckSetter(value, @"A-z\-");
         }
         public string LastName
         {
-            get => _lastName; set => _lastName = StringCheckSetter(value, "A-z");
+            get => _lastName;
+            set => _lastName = StringCheckSetter(value, @"A-z\s");
         }
         public string UserName
         {
@@ -61,19 +62,20 @@ namespace Core
             LastName = lastName;
             UserName = userName;
             Email = email;
+            Balance = 10000;
         }
 
         public override string ToString()
         {
             return $"{FirstName} {LastName} \n" +
-                   $" -----> ID:{MyId,0000} Email: {Email}";
+                   $" -----> ID:{MyId,0000} Balance: {Balance}";
         }
 
         private string StringCheckSetter (string value, string restriction)
         {
             if (!String.IsNullOrEmpty(value))
             {
-                return Regex.IsMatch(value, @"^[" + restriction + "]+$") ? value : "syntax error";
+                return Regex.IsMatch(value, "[" + restriction + "]") ? value : "syntax error";
             }
             return "";
         }

@@ -11,47 +11,49 @@ namespace Core
     {
         public event StregsystemEvent CommandEntered;
         private bool _running = true;
+        private string _info;
         private IStregsystem _stregsystem;
         public string Command;
         public StregsystemCLI(IStregsystem stregsystem)
         {
             _stregsystem = stregsystem;
+            _info = "Write your username and the product you want to buy, separated with a space";
         }
 
 
         public void DisplayUserNotFound(string username)
         {
-            Console.WriteLine($"User: {username}  was not fount");    
+            _info = $"User: {username}  was not fount";
         }
 
         public void DisplayProductNotFound(string product)
         {
-            Console.WriteLine($"Product: {product} was not found");
+            _info = $"Product: {product} was not found";
         }
 
         public void DisplayUserInfo(User user)
         {
-            Console.WriteLine(user.ToString());
+            _info = user.ToString();
         }
 
         public void DisplayTooManyArgumentsError(string command)
         {
-            Console.WriteLine($"The command \"{command}\" had too many arguments, try again with more simple command :)");
+            _info = $"The command \"{command}\" had too many arguments, try again with more simple command :)";
         }
 
         public void DisplayAdminCommandNotFoundMessage(string adminCommand)
         {
-            Console.WriteLine($"\"{adminCommand}\" was not found in the system");
+            _info = $"\"{adminCommand}\" was not found in the system";
         }
 
         public void DisplayUserBuysProduct(BuyTransaction transaction)
         {
-            Console.WriteLine(transaction.ToString());
+            _info = transaction.ToString();
         }
 
         public void DisplayUserBuysProduct(int count, BuyTransaction transaction)
         {
-            Console.WriteLine($"You bought {count} {transaction}");
+            _info = $"You bought {count} {transaction}";
         }
 
         public void Close()
@@ -61,12 +63,12 @@ namespace Core
 
         public void DisplayInsufficientCash(User user, Product product)
         {
-            Console.WriteLine($"sry {user.UserName}, you have insufficient cash. You are {user.Balance - product.Price} short");
+            _info = $"sry {user.UserName}, you have insufficient cash. You are {user.Balance - product.Price} short";
         }
 
         public void DisplayGeneralError(string errorString)
         {
-            Console.WriteLine($"sry man, i relly don't get this: \"{errorString}\"");
+            _info = $"sry man, i relly don't get this: \"{errorString}\"";
         }
 
         public void Start()
@@ -81,7 +83,6 @@ namespace Core
 
         private void Draw()
         {
-            Console.WriteLine("Write your username and the product you want to buy, separated with a space");
             Console.WriteLine(String.Format("{0, 4} | {1, -40} | {2}", "ID", "Product", "Price"));
             Console.WriteLine("----------------------------------------------------------");
             foreach (var product in _stregsystem.ActiveProducts)
@@ -89,6 +90,7 @@ namespace Core
                 Console.WriteLine(product.ToString());
             }
             Console.WriteLine("----------------------------------------------------------");
+            Console.WriteLine(_info);
         }
 
         private void Prompt()

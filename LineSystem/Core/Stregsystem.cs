@@ -11,16 +11,28 @@ namespace Core
     public delegate void UserBalanceNotification(User user, decimal balance);
     class Stregsystem : IStregsystem
     {
+        private StreamWriter _logFile;
         private List<Transaction> _transactions = new List<Transaction>();
         private readonly List<Product> _products = new List<Product>();
         private readonly List<User> _users = new List<User>();
         public event UserBalanceNotification UserBalanceWarning;
         public IEnumerable<Product> ActiveProducts => _products.Where(x => x.Active);
 
+
         public Stregsystem()
         {
             ProductLoading();
             UserLoading();
+            _logFile = File.AppendText(@"..\..\..\InputFiles\Log.txt");
+        }
+
+        public static void Log(string logMessage, TextWriter logFile)
+        {
+            logFile.Write("\r\nLog Entry : ");
+            logFile.WriteLine($"{DateTime.Now.ToLongTimeString()} {DateTime.Now.ToLongDateString()}");
+            logFile.WriteLine("  :");
+            logFile.WriteLine($"  :{logMessage}");
+            logFile.WriteLine("-------------------------------");
         }
 
         private void ProductLoading()
@@ -44,13 +56,24 @@ namespace Core
 
         private void UserLoading()
         { 
-
+            var reader = new StreamReader(@"..\..\..\InputFiles\userbase.csv");
+            reader.ReadLine();
+            while (!reader.EndOfStream)
+            {
+                var lineRead = reader.ReadLine()?.Split(';');
+                if (lineRead != null)
+                {
+                    var firstname = Regex.Replace(lineRead[0], "\"", "");
+                    var lastname = Regex.Replace(lineRead[1], "\"", "");
+                    var username = Regex.Replace(lineRead[2], "\"", "");
+                    var email = Regex.Replace(lineRead[3], "\"", "");
+                    var newUser = new User(firstname, lastname, username, email);
+                    newUser.UserBalanceNotification = UserBalanceWarning;
+                    _users.Add(newUser);
+                }
+            }
         }
 
-        private void UserBalanceNotification(User user, decimal balance)
-        {
-
-        }
 
         public InsertCashTransaction AddCreditsToAccount(User user, decimal amount)
         {
@@ -60,7 +83,9 @@ namespace Core
 
         private void ExecuteTransaction(Transaction transaction)
         {
+            transaction.Execute();
             _transactions.Add(transaction);
+            Log(transaction.ToString(), _logFile);
         }
 
         public BuyTransaction BuyProduct(User user, Product product)
@@ -74,7 +99,7 @@ namespace Core
             {
                 throw;
             }
-            _transactions.Add(newTransaction);
+            ExecuteTransaction(newTransaction);
             return newTransaction;
 
         }
@@ -104,10 +129,9 @@ namespace Core
             {
                 return User;
             }
+
             throw new UserNotFoundException(username, "User not found");
         }
-
-        
     }
 
     internal class UserNotFoundException : Exception
@@ -116,6 +140,14 @@ namespace Core
         public UserNotFoundException(string userName, string s) : base(s)
         {
             UserName = userName;
+        }
+    }
+    internal class ProductNotFoundException : Exception
+    {
+        public string Product;
+        public ProductNotFoundException(string product, string s) : base(s)
+        {
+            Product = product;
         }
     }
 }
