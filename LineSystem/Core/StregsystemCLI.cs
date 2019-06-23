@@ -83,6 +83,7 @@ namespace Core
 
         private void Draw()
         {
+            Console.Clear();
             Console.WriteLine(String.Format("{0, 4} | {1, -40} | {2}", "ID", "Product", "Price"));
             Console.WriteLine("----------------------------------------------------------");
             foreach (var product in _stregsystem.ActiveProducts)
